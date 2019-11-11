@@ -134,17 +134,3 @@ class VideoQualityAssessment:
       frame_per_second[idx] -= 1
     
     return frame_per_second
-      
-
-if __name__ == "__main__":
-  parse = argparse.ArgumentParser(description = 'manual to this script')
-  parse.add_argument('--rawvideo', type=str, default="", help="Raw video, video before encode.")
-  parse.add_argument('--testvideo', type=str, default="", help="Test video, video after encode, transmission and decode.")
-  parse.add_argument('--dimension', type=str, default="", help="Width and height of video, like 1280x720")
-  parse.add_argument('--format', type=str, default="", help="Color format of video, like I420")
-  argv = parse.parse_args()
-
-  assessment = VideoQualityAssessment("video/sport.yuv", "video/sport_test.yuv", (1280,720), "I420")
-  found_ids, psnr_data, dropped_ids = assessment.PSNRAssessment()
-  plt.plot(found_ids, psnr_data)
-  plt.show()
