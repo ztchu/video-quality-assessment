@@ -34,19 +34,20 @@ if __name__ == "__main__":
   test_videos = parameters['test_videos']
   framerate = int(parameters['framerate'])
   dimension = parameters['dimension']
+  size = dimension.split('x')
   colorformat = parameters['color_format']
   duration = int(parameters['duration'])
 
   results = []
   for index, raw_video in enumerate(raw_videos):
     test_video = test_videos[index]
-    assessment1 = VideoQualityAssessment(raw_video, test_video, (1280,720), "I420")
+    assessment1 = VideoQualityAssessment(raw_video, test_video, (int(size[0]),int(size[1])), "I420")
     found_ids1, psnr_data1, dropped_ids1 = assessment1.PSNRAssessment()
     framerate1 = assessment1.FrameRateAssessment(framerate, found_ids1, dropped_ids1)
     framerate1 = ExpandList(framerate1)
     results.append((found_ids1, psnr_data1, framerate1))
 
-  labels = raw_videos
+  labels = test_videos
   p=None
   for index, result in enumerate(results):
     found_ids1, psnr_data1, framerate1 = result
